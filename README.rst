@@ -42,6 +42,11 @@ To use django-adminfiles in your Django project:
 Settings
 ========
 
+MYENQUIRIES_THANKS_URL
+--------------------
+
+The URL to be displayed upon successful completion of the contact form
+
 MYENQUIRIES_CONTEXT_KEY
 --------------------
 

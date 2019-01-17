@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from myenquiries import forms as enquiry_forms
+from myenquiries import settings
 
 
 class MyEnquiriesOneErrorMiddleware(object):
@@ -15,7 +16,7 @@ class MyEnquiriesOneErrorMiddleware(object):
             form = enquiry_forms.EnquiryForm(request.POST)
             if form.is_valid():
                 form.send_enquiry(request)
-                return redirect(reverse("myenquiries:url_thanks") + "#",)
+                return redirect(settings.MYENQUIRIES_THANKS_URL)
 
         response = self.get_response(request)
         return response

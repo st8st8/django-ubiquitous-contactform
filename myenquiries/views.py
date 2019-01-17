@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from coracleinside import models as coracle_models
-from . import forms
+from . import forms, settings
 
 
 def contact(request):
@@ -17,7 +17,7 @@ def contact(request):
 
         if form.is_valid():
             form.send_enquiry(request)
-            return redirect(reverse("myenquiries:url_thanks") + "#",)
+            return redirect(settings.MYENQUIRIES_THANKS_URL)
         else:
             context['contact_form'] = form
     else:
