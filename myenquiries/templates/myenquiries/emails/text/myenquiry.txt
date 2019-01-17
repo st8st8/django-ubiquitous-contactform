@@ -1,0 +1,7 @@
+Enquiry from My Enquiries:
+----------------------
+
+From {{ e.name }} ({{e.email}})
+------------------------------
+
+{{ e.text }}
