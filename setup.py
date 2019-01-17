@@ -14,7 +14,7 @@ setup(
     author_email='steve@pcfive.co.uk',
     long_description=long_description,
     url='https://github.com/st8st8/django-myenquiries/',
-    packages=['myenquiries', 'myenquiries.templatetags', 'myenquiries.migrations'],
+    packages=['myenquiries', 'myenquiries.migrations'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -30,5 +30,5 @@ setup(
     package_data={'myenquiries': [
                                  'templates/myenquiries/emails/html/*',
                                  'templates/myenquiries/emails/text/*',
-                                 'templates/myenquiries/*.html'}
+                                 'templates/myenquiries/*.html']}
 )
