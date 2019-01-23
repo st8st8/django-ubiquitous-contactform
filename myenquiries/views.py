@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
-from coracleinside import models as coracle_models
 from . import forms, settings
 
 
