@@ -7,14 +7,14 @@ long_description = (open('README.rst').read() +
                     open('TODO.rst').read())
 
 setup(
-    name='django-myenquiries',
-    version='1.0.0',
+    name='django-ubiquitous-contactform',
+    version='0.3.1',
     description='Ubiquitous contact form for django sites',
     author='Steve Bradshaw',
     author_email='steve@pcfive.co.uk',
     long_description=long_description,
-    url='https://github.com/st8st8/django-myenquiries/',
-    packages=['myenquiries', 'myenquiries.migrations'],
+    url='https://github.com/st8st8/django-ubiquitous_contactform/',
+    packages=['ubiquitous_contactform', 'ubiquitous_contactform.migrations'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -27,8 +27,8 @@ setup(
     ],
     zip_safe=False,
     test_suite='tests.runtests.runtests',
-    package_data={'myenquiries': [
-                                 'templates/myenquiries/emails/html/*',
-                                 'templates/myenquiries/emails/text/*',
-                                 'templates/myenquiries/*.html']}
+    package_data={'ubiquitous_contactform': [
+                                 'templates/ubiquitous_contactform/emails/html/*',
+                                 'templates/ubiquitous_contactform/emails/text/*',
+                                 'templates/ubiquitous_contactform/*.html']}
 )

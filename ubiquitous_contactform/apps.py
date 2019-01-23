@@ -4,5 +4,5 @@ from django.apps import AppConfig
 
 
 class MyWEnquiriesConfig(AppConfig):
-    name = "myenquiries"
-    verbose_name = "My Enquiries"
+    name = "ubiquitous_contact"
+    verbose_name = "Ubiquitous Contact Form"

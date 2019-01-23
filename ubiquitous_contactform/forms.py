@@ -9,7 +9,7 @@ from django import forms
 from django.forms import widgets
 from django.utils import timezone
 
-from myenquiries import utils
+from ubiquitous_contactform import utils
 from . import models, validators, settings
 from django.conf import settings as django_settings
 
@@ -86,15 +86,15 @@ class EnquiryForm(StyledErrorForm):
         blocklist = "http://api.blocklist.de/api.php?ip={0}"
         self.is_blocklist(request, enquiry)
         if not enquiry.ip_blocklist:
-            for a in settings.MYENQUIRIES_RECIPIENTS:
+            for a in settings.UBIQUITOUS_CONTACT_FORM_RECIPIENTS:
                 context = {}
                 context["e"] = self.cleaned_data
-                html_message, text_message = utils.myenquiries_get_html_email_template(
+                html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
                     "myenquiry",
                     a[1],
                     context
                 )
-                utils.myenquiries_send_mail(
+                utils.ubiquitous_contact_send_mail(
                     "Coracle Inside enquiry",
                     text_message,
                     django_settings.SERVER_EMAIL,
@@ -106,7 +106,7 @@ class EnquiryForm(StyledErrorForm):
 
     @staticmethod
     def is_blocklist(request, enquiry):
-        if settings.MYENQUIRIES_CHECK_BLOCKLIST is True:
+        if settings.UBIQUITOUS_CONTACT_FORM_CHECK_BLOCKLIST is True:
             if request.META.get("REMOTE_ADDR"):
                 ip = request.META.get("REMOTE_ADDR")
                 resp = requests.get("http://api.blocklist.de/api.php?ip={0}".format(ip))

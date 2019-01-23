@@ -11,18 +11,18 @@ def email_default_context(recipoient, target_user=None):
     return {}
 
 
-def myenquiries_get_html_email_template(template_name, recipient, context, target_user=None):
+def ubiquitous_contact_get_html_email_template(template_name, recipient, context, target_user=None):
     context.update(email_default_context(recipient, target_user=target_user))
     html_ret = None
     text_ret = None
     try:
-        html_template = get_template("myenquiries/emails/html/{0}.html".format(template_name))
+        html_template = get_template("ubiquitous_contact/emails/html/{0}.html".format(template_name))
         html_ret = html_template.render(context)
     except TemplateDoesNotExist:
         pass
 
     try:
-        text_template = get_template("myenquiries/emails/text/{0}.txt".format(template_name))
+        text_template = get_template("ubiquitous_contact/emails/text/{0}.txt".format(template_name))
         text_ret = text_template.render(context)
     except TemplateDoesNotExist:
         pass
@@ -30,7 +30,7 @@ def myenquiries_get_html_email_template(template_name, recipient, context, targe
     return html_ret, text_ret
 
 
-def myenquiries_send_mail(subject, message, from_email, recipient_list,
+def ubiquitous_contact_send_mail(subject, message, from_email, recipient_list,
                             fail_silently=False, auth_user=None, auth_password=None,
                             connection=None, headers=None, attachments=None, html_message=None, test_mode=False):
     if isinstance(recipient_list, six.string_types):
@@ -47,7 +47,7 @@ def myenquiries_send_mail(subject, message, from_email, recipient_list,
         msg = EmailMultiAlternatives(subject="MyEnq Test: " + "{0}".format(subject),
                                      body="To: " + ", ".join(recipient_list) + "\n\n--\n" + unicode(message),
                                      from_email=from_email,
-                                     to=[settings.MYENQUIRIES_STAGING_EMAIL_ADDRESS],
+                                     to=[settings.UBIQUITOUS_CONTACT_FORM_STAGING_EMAIL_ADDRESS],
                                      headers=headers,
                                      attachments=attachments,
                                      connection=connection)

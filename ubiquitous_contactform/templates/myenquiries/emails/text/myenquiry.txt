@@ -1,4 +1,4 @@
-Enquiry from My Enquiries:
+Enquiry from Ubiquitous Contact Form:
 ----------------------
 
 From {{ e.name }} ({{e.email}})

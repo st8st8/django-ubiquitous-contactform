@@ -16,17 +16,17 @@ def contact(request):
 
         if form.is_valid():
             form.send_enquiry(request)
-            return redirect(settings.MYENQUIRIES_THANKS_URL)
+            return redirect(settings.UBIQUITOUS_CONTACT_FORM_THANKS_URL)
         else:
             context['contact_form'] = form
     else:
         form = forms.EnquiryForm()  # An unbound form
         context['contact_form'] = form
 
-    return render(request, 'myenquiries/contact.html', context)
+    return render(request, 'ubiquitous_contact/contact.html', context)
 
 
 def thanks(request):
     is_admin = request.user.is_staff
     context = dict()
-    return render(request, 'myenquiries/thanks.html', context)
+    return render(request, 'ubiquitous_contact/thanks.html', context)

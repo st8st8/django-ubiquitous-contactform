@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from myenquiries import forms as enquiry_forms
+from ubiquitous_contactform import forms as enquiry_forms
 from . import settings
 
 
@@ -19,10 +19,10 @@ def ubiquitous_contact(request):
     if request.method == 'POST':
         form = enquiry_forms.EnquiryForm(request.POST)
         if not form.is_valid():
-            context['myenquiries_one_error'] = get_form_error(form)
+            context['ubiquitous_contact_one_error'] = get_form_error(form)
     else:
         form = enquiry_forms.EnquiryForm()
 
-    k = settings.MYENQUIRIES_CONTEXT_KEY
+    k = settings.UBIQUITOUS_CONTACT_FORM_CONTEXT_KEY
     context[k] = form
     return context

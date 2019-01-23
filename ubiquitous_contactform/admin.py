@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import json
-import myenquiries.models as enq
+import ubiquitous_contactform.models as enq
 from django.contrib import admin
 
 
