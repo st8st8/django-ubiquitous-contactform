@@ -14,7 +14,6 @@ class EnquiryAdmin(admin.ModelAdmin):
                 'fields':
                     [
                         ('first_name', 'last_name'),
-                        ('sent_to_salesforce'),
                         ('ip_blocklist', 'ip_blocklist_response'),
                         'text'
                     ]

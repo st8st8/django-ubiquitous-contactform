@@ -47,7 +47,7 @@ def myenquiries_send_mail(subject, message, from_email, recipient_list,
         msg = EmailMultiAlternatives(subject="MyEnq Test: " + "{0}".format(subject),
                                      body="To: " + ", ".join(recipient_list) + "\n\n--\n" + unicode(message),
                                      from_email=from_email,
-                                     to=[settings.STAGING_EMAIL_ADDRESS],
+                                     to=[settings.MYENQUIRIES_STAGING_EMAIL_ADDRESS],
                                      headers=headers,
                                      attachments=attachments,
                                      connection=connection)
