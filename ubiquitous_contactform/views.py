@@ -23,10 +23,10 @@ def contact(request):
         form = forms.EnquiryForm()  # An unbound form
         context['contact_form'] = form
 
-    return render(request, 'ubiquitous_contact/contact.html', context)
+    return render(request, 'ubiquitous_contactform/contact.html', context)
 
 
 def thanks(request):
     is_admin = request.user.is_staff
     context = dict()
-    return render(request, 'ubiquitous_contact/thanks.html', context)
+    return render(request, 'ubiquitous_contactform/thanks.html', context)

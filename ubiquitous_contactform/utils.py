@@ -16,13 +16,13 @@ def ubiquitous_contact_get_html_email_template(template_name, recipient, context
     html_ret = None
     text_ret = None
     try:
-        html_template = get_template("ubiquitous_contact/emails/html/{0}.html".format(template_name))
+        html_template = get_template("ubiquitous_contactform/emails/html/{0}.html".format(template_name))
         html_ret = html_template.render(context)
     except TemplateDoesNotExist:
         pass
 
     try:
-        text_template = get_template("ubiquitous_contact/emails/text/{0}.txt".format(template_name))
+        text_template = get_template("ubiquitous_contactform/emails/text/{0}.txt".format(template_name))
         text_ret = text_template.render(context)
     except TemplateDoesNotExist:
         pass
