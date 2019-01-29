@@ -12,7 +12,7 @@ class UbiquitousContactFormOneErrorMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.method == 'POST':
+        if request.method == 'POST' and request.POST.get("action") == "ubiquitous_contact_submit":
             form = enquiry_forms.EnquiryForm(request.POST)
             if form.is_valid():
                 form.send_enquiry(request)

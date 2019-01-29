@@ -29,6 +29,10 @@ class StyledErrorForm(forms.Form):
 
 
 class EnquiryForm(StyledErrorForm):
+    action = forms.CharField(
+        max_length="31",
+        widget=forms.HiddenInput(),
+        initial="ubiquitous_contact_submit")
     name = forms.CharField(
         max_length=255, required=True,
         label="Your name",
@@ -44,21 +48,21 @@ class EnquiryForm(StyledErrorForm):
         label="Phone number",
         widget=widgets.TextInput(attrs={"placeholder": "phone"})
     )
-    confirm_email = forms.URLField(
-        max_length=30, required=False,
-        label="Confirm email",
-        widget=widgets.EmailInput(attrs={"id": "id_email", "name": "email", "placeholder": "email"}),
-        validators=[validators.validate_empty],
-        help_text="This is a honeypot, and shouldn't be filled in by humans"
-    )
     email = forms.EmailField(
         required=True,
         label="Email",
-        widget=widgets.EmailInput(attrs={"id": "id_url", "name": "url", "placeholder": "email"}))
+        widget=widgets.EmailInput(attrs={"id": "id_email", "placeholder": "email"}))
+    confirm_email = forms.EmailField(
+        max_length=30, required=False,
+        label="Confirm email",
+        widget=widgets.EmailInput(attrs={"id": "id_confirm_email", "placeholder": "email"}),
+        validators=[validators.validate_empty],
+        help_text="This is a honeypot, and shouldn't be filled in by humans"
+    )
     text = forms.CharField(
         required=True,
         label="Enquiry",
-        widget=widgets.Textarea(attrs={"id": "id_beans", "name": "beans", "placeholder": "enquiry:"})
+        widget=widgets.Textarea(attrs={"id": "id_enquiry", "placeholder": "enquiry:"})
     )
 
     def send_enquiry(self, request):
