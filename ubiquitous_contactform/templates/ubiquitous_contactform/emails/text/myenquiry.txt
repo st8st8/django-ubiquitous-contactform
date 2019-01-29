@@ -1,4 +1,4 @@
-Enquiry from Ubiquitous Contact Form:
+Enquiry from the contact form on {{ site.name }}:
 ----------------------
 
 From {{ e.name }} ({{e.email}})

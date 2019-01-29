@@ -9,6 +9,7 @@ from django import forms
 from django.forms import widgets
 from django.utils import timezone
 
+from django.contrib.sites.models import Site
 from ubiquitous_contactform import utils
 from . import models, validators, settings
 from django.conf import settings as django_settings
@@ -89,6 +90,7 @@ class EnquiryForm(StyledErrorForm):
         enquiry.request_meta = json.dumps(meta)
         blocklist = "http://api.blocklist.de/api.php?ip={0}"
         self.is_blocklist(request, enquiry)
+        enquiry.save()
         if not enquiry.ip_blocklist:
             for a in settings.UBIQUITOUS_CONTACT_FORM_RECIPIENTS:
                 context = {}
@@ -105,7 +107,23 @@ class EnquiryForm(StyledErrorForm):
                     a[1],
                     html_message=html_message
                 )
-        enquiry.save()
+            if settings.UBIQUITOUS_CONTACT_FORM_SEND_RECEIPT:
+                context = {}
+                context["e"] = self.cleaned_data
+                context["site"] = Site.objects.get_current(request)
+                html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
+                    "receipt",
+                    enquiry.email,
+                    context
+                )
+                utils.ubiquitous_contact_send_mail(
+                    "Coracle Inside enquiry",
+                    text_message,
+                    django_settings.SERVER_EMAIL,
+                    enquiry.email,
+                    html_message=html_message
+                )
+                
         return enquiry
 
     @staticmethod
