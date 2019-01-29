@@ -44,7 +44,7 @@ def ubiquitous_contact_send_mail(subject, message, from_email, recipient_list,
                                               password=auth_password,
                                               fail_silently=fail_silently)
     if not islive:
-        msg = EmailMultiAlternatives(subject="MyEnq Test: " + "{0}".format(subject),
+        msg = EmailMultiAlternatives(subject="Ubiquitous Contact Form Test: " + "{0}".format(subject),
                                      body="To: " + ", ".join(recipient_list) + "\n\n--\n" + unicode(message),
                                      from_email=from_email,
                                      to=[settings.UBIQUITOUS_CONTACT_FORM_STAGING_EMAIL_ADDRESS],

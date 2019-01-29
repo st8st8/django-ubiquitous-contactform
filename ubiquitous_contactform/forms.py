@@ -67,6 +67,7 @@ class EnquiryForm(StyledErrorForm):
     )
 
     def send_enquiry(self, request):
+        site = Site.objects.get_current(request)
         enquiry = models.Enquiry()
         names = self.cleaned_data['name'].rsplit(' ', 1)
         enquiry.first_name = names[0]
@@ -101,7 +102,7 @@ class EnquiryForm(StyledErrorForm):
                     context
                 )
                 utils.ubiquitous_contact_send_mail(
-                    "Coracle Inside enquiry",
+                    "Enquiry on {0}".format(site.name),
                     text_message,
                     django_settings.SERVER_EMAIL,
                     a[1],
@@ -110,14 +111,14 @@ class EnquiryForm(StyledErrorForm):
             if settings.UBIQUITOUS_CONTACT_FORM_SEND_RECEIPT:
                 context = {}
                 context["e"] = self.cleaned_data
-                context["site"] = Site.objects.get_current(request)
+                context["site"] = site
                 html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
                     "receipt",
                     enquiry.email,
                     context
                 )
                 utils.ubiquitous_contact_send_mail(
-                    "Coracle Inside enquiry",
+                    settings.UBIQUITOUS_CONTACT_FORM_RECEIPT_SUBJECT,
                     text_message,
                     django_settings.SERVER_EMAIL,
                     enquiry.email,
