@@ -2,31 +2,29 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
+from django.views import generic
 from django.shortcuts import render, redirect
 from . import forms, settings
 
 
-def contact(request):
-    is_admin = request.user.is_staff
+class ContactView(generic.FormView):
+    template_name = 'ubiquitous_contactform/contact.html'
     context = dict()
     context["hide_footer_contact"] = True
-
-    if request.method == 'POST':  # If the form has been submitted...
-        form = forms.EnquiryForm(request.POST)
+    
+    def get_context_data(self, **kwargs):
+        context = dict()
+        form = forms.EnquiryForm(self.request.POST)  # An unbound form
+        context['contact_form'] = form
+        return context
+        
+    def post(self, request, *args, **kwargs):
+        form = forms.EnquiryForm(self.request.POST)
 
         if form.is_valid():
-            form.send_enquiry(request)
+            form.send_enquiry(self.request)
             return redirect(settings.UBIQUITOUS_CONTACT_FORM_THANKS_URL)
-        else:
-            context['contact_form'] = form
-    else:
-        form = forms.EnquiryForm()  # An unbound form
-        context['contact_form'] = form
-
-    return render(request, 'ubiquitous_contactform/contact.html', context)
 
 
-def thanks(request):
-    is_admin = request.user.is_staff
-    context = dict()
-    return render(request, 'ubiquitous_contactform/thanks.html', context)
+class ThanksView(generic.TemplateView):
+    template_name = 'ubiquitous_contactform/thanks.html'
