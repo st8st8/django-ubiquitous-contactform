@@ -96,6 +96,7 @@ class EnquiryForm(StyledErrorForm):
             for a in settings.UBIQUITOUS_CONTACT_FORM_RECIPIENTS:
                 context = {}
                 context["e"] = self.cleaned_data
+                context["site"] = site
                 html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
                     "myenquiry",
                     a[1],
