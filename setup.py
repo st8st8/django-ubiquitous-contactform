@@ -8,7 +8,7 @@ long_description = (open('README.rst').read() +
 
 setup(
     name='django-ubiquitous-contactform',
-    version='0.4.0',
+    version='0.5.0',
     description='Ubiquitous contact form for django sites',
     author='Steve Bradshaw',
     author_email='steve@pcfive.co.uk',
