@@ -107,7 +107,8 @@ class EnquiryForm(StyledErrorForm):
                     text_message,
                     django_settings.SERVER_EMAIL,
                     a[1],
-                    html_message=html_message
+                    html_message=html_message,
+                    reply_to=[enquiry.email]
                 )
             if settings.UBIQUITOUS_CONTACT_FORM_SEND_RECEIPT:
                 context = {}

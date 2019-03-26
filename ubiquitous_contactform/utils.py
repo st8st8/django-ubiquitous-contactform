@@ -31,7 +31,7 @@ def ubiquitous_contact_get_html_email_template(template_name, recipient, context
 
 
 def ubiquitous_contact_send_mail(subject, message, from_email, recipient_list,
-                            fail_silently=False, auth_user=None, auth_password=None,
+                            fail_silently=False, auth_user=None, auth_password=None, reply_to=None,
                             connection=None, headers=None, attachments=None, html_message=None, test_mode=False):
     if isinstance(recipient_list, six.string_types):
         recipient_list = [recipient_list]
@@ -50,7 +50,8 @@ def ubiquitous_contact_send_mail(subject, message, from_email, recipient_list,
                                      to=[settings.UBIQUITOUS_CONTACT_FORM_STAGING_EMAIL_ADDRESS],
                                      headers=headers,
                                      attachments=attachments,
-                                     connection=connection)
+                                     connection=connection,
+                                     reply_to=reply_to)
         if html_message:
             html_message = "<h3>To: " + ", ".join(recipient_list) + "</h3>" + html_message
             msg.attach_alternative(html_message, "text/html")
@@ -63,7 +64,8 @@ def ubiquitous_contact_send_mail(subject, message, from_email, recipient_list,
                                      to=recipient_list,
                                      headers=headers,
                                      attachments=attachments,
-                                     connection=connection)
+                                     connection=connection,
+                                     reply_to=reply_to)
 
         if html_message:
             msg.attach_alternative(html_message, "text/html")
