@@ -84,7 +84,7 @@ class EnquiryForm(StyledErrorForm):
         enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
         meta = copy.copy(request.META)
 
-        for x in meta.keys():
+        for x in request.META.keys():
             if not isinstance(meta[x], six.string_types):
                 del meta[x]
 
