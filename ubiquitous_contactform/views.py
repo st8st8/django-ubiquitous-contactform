@@ -1,7 +1,7 @@
 # Create your views here.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views import generic
 from django.shortcuts import render, redirect
 from . import forms, settings

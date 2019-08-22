@@ -10,17 +10,17 @@ Installation
 
 Install from PyPI with ``easy_install`` or ``pip``::
 
-    pip install django-ubiquitous-contactform
+    pip3 install django-ubiquitous-contactform
 
 or get the in-development version:
 
-    pip install http://github.com/st8st8/django-ubiquitous-contactform
+    pip3 install http://github.com/st8st8/django-ubiquitous-contactform
 
 
 Dependencies
 ------------
 
-``django-adminfiles`` requires `Django`_ 1.11 or later,
+``django-adminfiles`` requires `Django`_ 2.0 or later,
 
 
 Usage
