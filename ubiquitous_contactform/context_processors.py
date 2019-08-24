@@ -7,7 +7,7 @@ from . import settings
 def get_form_error(form):
     errors = form.errors
     if len(errors) != 0:
-        ekey = errors.keys()[0]
+        ekey = next(errors.keys())
         err = "'{0}': {1}".format(form.fields[ekey].label, errors[ekey].as_text()[2:])
         return err  # the slice strips the star and space off the front
     else:
