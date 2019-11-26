@@ -29,67 +29,13 @@ class StyledErrorForm(forms.Form):
         return ret
 
 
-class EnquiryForm(StyledErrorForm):
-    action = forms.CharField(
-        max_length="31",
-        widget=forms.HiddenInput(),
-        initial="ubiquitous_contact_submit")
-    name = forms.CharField(
-        max_length=255, required=True,
-        label="Your name",
-        widget=widgets.TextInput(attrs={"placeholder": "your name"})
-        )
-    company = forms.CharField(
-        max_length=255, required=False,
-        label="Company",
-        widget=widgets.TextInput(attrs={"placeholder": "company"})
-    )
-    tel = forms.CharField(
-        max_length=30, required=False,
-        label="Phone number",
-        widget=widgets.TextInput(attrs={"placeholder": "phone"})
-    )
-    email = forms.EmailField(
-        required=True,
-        label="Email",
-        widget=widgets.EmailInput(attrs={"id": "id_email", "placeholder": "email"}))
-    confirm_email = forms.EmailField(
-        max_length=30, required=False,
-        label="Confirm email",
-        widget=widgets.EmailInput(attrs={"id": "id_confirm_email", "placeholder": "email"}),
-        validators=[validators.validate_empty],
-        help_text="This is a honeypot, and shouldn't be filled in by humans"
-    )
-    text = forms.CharField(
-        required=True,
-        label="Enquiry",
-        widget=widgets.Textarea(attrs={"id": "id_enquiry", "placeholder": "enquiry:"})
-    )
+class AbstractEnquiryForm(StyledErrorForm):
+    def form_to_model(self, request):
+        raise NotImplementedError
 
     def send_enquiry(self, request):
         site = Site.objects.get_current(request)
-        enquiry = models.Enquiry()
-        names = self.cleaned_data['name'].rsplit(' ', 1)
-        enquiry.first_name = names[0]
-        if len(names) > 1:
-            enquiry.last_name = names[1]
-        else:
-            enquiry.last_name = ""  # this stops it becoming 'None'
-        enquiry.tel = self.cleaned_data['tel']
-        enquiry.email = self.cleaned_data['email']
-        enquiry.company = self.cleaned_data['company']
-        enquiry.text = self.cleaned_data['text']
-        enquiry.datemade = timezone.now()
-        enquiry.frompage = request.path
-        enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
-        meta = copy.copy(request.META)
-
-        for x in request.META.keys():
-            if not isinstance(meta[x], six.string_types):
-                del meta[x]
-
-        enquiry.request_meta = json.dumps(meta)
-        blocklist = "http://api.blocklist.de/api.php?ip={0}"
+        enquiry = self.form_to_model(request)
         self.is_blocklist(request, enquiry)
         enquiry.save()
         if not enquiry.ip_blocklist:
@@ -141,3 +87,127 @@ class EnquiryForm(StyledErrorForm):
                         enquiry.ip_blocklist = False
                     else:
                         enquiry.ip_blocklist = True
+
+
+class EnquiryForm(AbstractEnquiryForm):
+    action = forms.CharField(
+        max_length="31",
+        widget=forms.HiddenInput(),
+        initial="ubiquitous_contact_submit")
+    name = forms.CharField(
+        max_length=255, required=True,
+        label="Your name",
+        widget=widgets.TextInput(attrs={"placeholder": "your name"})
+        )
+    company = forms.CharField(
+        max_length=255, required=False,
+        label="Company",
+        widget=widgets.TextInput(attrs={"placeholder": "company"})
+    )
+    tel = forms.CharField(
+        max_length=30, required=False,
+        label="Phone number",
+        widget=widgets.TextInput(attrs={"placeholder": "phone"})
+    )
+    email = forms.EmailField(
+        required=True,
+        label="Email",
+        widget=widgets.EmailInput(attrs={"id": "id_email", "placeholder": "email"}))
+    confirm_email = forms.EmailField(
+        max_length=30, required=False,
+        label="Confirm email",
+        widget=widgets.EmailInput(attrs={"id": "id_confirm_email", "placeholder": "email"}),
+        validators=[validators.validate_empty],
+        help_text="This is a honeypot, and shouldn't be filled in by humans"
+    )
+    text = forms.CharField(
+        required=True,
+        label="Enquiry",
+        widget=widgets.Textarea(attrs={"id": "id_enquiry", "placeholder": "enquiry:"})
+    )
+    
+    def form_to_model(self, request):
+        enquiry = models.Enquiry()
+        names = self.cleaned_data['name'].rsplit(' ', 1)
+        enquiry.first_name = names[0]
+        if len(names) > 1:
+            enquiry.last_name = names[1]
+        else:
+            enquiry.last_name = ""  # this stops it becoming 'None'
+        enquiry.tel = self.cleaned_data['tel']
+        enquiry.email = self.cleaned_data['email']
+        enquiry.company = self.cleaned_data['company']
+        enquiry.text = self.cleaned_data['text']
+        enquiry.datemade = timezone.now()
+        enquiry.frompage = request.path
+        enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
+        meta = copy.copy(request.META)
+
+        for x in request.META.keys():
+            if not isinstance(meta[x], six.string_types):
+                del meta[x]
+
+        enquiry.request_meta = json.dumps(meta)
+        return enquiry
+
+
+class HeavyHoneypotEnquiryForm(AbstractEnquiryForm):
+    action = forms.CharField(
+        max_length="31",
+        widget=forms.HiddenInput(),
+        initial="ubiquitous_contact_submit")
+    xelpud = forms.CharField(
+        max_length=255, required=True,
+        label="Your name",
+        widget=widgets.TextInput(attrs={"placeholder": "your name"})
+        )
+    shorn = forms.CharField(
+        max_length=255, required=False,
+        label="Company",
+        widget=widgets.TextInput(attrs={"placeholder": "company"})
+    )
+    lumisa = forms.CharField(
+        max_length=30, required=False,
+        label="Phone number",
+        widget=widgets.TextInput(attrs={"placeholder": "phone"})
+    )
+    lemeza = forms.EmailField(
+        required=True,
+        label="Email",
+        widget=widgets.EmailInput(attrs={"id": "id_lemeza", "placeholder": "email"}))
+    email = forms.EmailField(
+        max_length=30, required=False,
+        label="Email",
+        widget=widgets.EmailInput(attrs={"id": "id_email", "placeholder": "email"}),
+        validators=[validators.validate_empty],
+        help_text="This is a honeypot, and shouldn't be filled in by humans"
+    )
+    mulbruk = forms.CharField(
+        required=True,
+        label="Enquiry",
+        widget=widgets.Textarea(attrs={"id": "id_enquiry", "placeholder": "enquiry:"})
+    )
+    
+    def form_to_model(self, request):
+        enquiry = models.Enquiry()
+        names = self.cleaned_data['xelpud'].rsplit(' ', 1)
+        enquiry.first_name = names[0]
+        if len(names) > 1:
+            enquiry.last_name = names[1]
+        else:
+            enquiry.last_name = ""  # this stops it becoming 'None'
+        enquiry.tel = self.cleaned_data['lumisa']
+        enquiry.email = self.cleaned_data['lemeza']
+        enquiry.company = self.cleaned_data['shorn']
+        enquiry.text = self.cleaned_data['mulbruk']
+        enquiry.datemade = timezone.now()
+        enquiry.frompage = request.path
+        enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
+        meta = copy.copy(request.META)
+
+        for x in request.META.keys():
+            if not isinstance(meta[x], six.string_types):
+                del meta[x]
+
+        enquiry.request_meta = json.dumps(meta)
+        return enquiry

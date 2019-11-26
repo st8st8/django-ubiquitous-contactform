@@ -26,3 +26,17 @@ def ubiquitous_contact(request):
     k = settings.UBIQUITOUS_CONTACT_FORM_CONTEXT_KEY
     context[k] = form
     return context
+
+
+def ubiquitous_honeypot_contact(request):
+    context = dict()
+    if request.method == 'POST' and request.POST.get("action") == "ubiquitous_contact_submit":
+        form = enquiry_forms.HeavyHoneypotEnquiryForm(request.POST)
+        if not form.is_valid():
+            context['ubiquitous_contact_one_error'] = get_form_error(form)
+    else:
+        form = enquiry_forms.HeavyHoneypotEnquiryForm()
+
+    k = settings.UBIQUITOUS_CONTACT_FORM_CONTEXT_KEY
+    context[k] = form
+    return context
