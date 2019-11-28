@@ -1,4 +1,4 @@
-Hello {{ e.name }},
+Hello {{ e.first_name }},
 
 Thanks for contacting {{ site.name }}.  We have received your message and we will get back to you as soon as we can.
 

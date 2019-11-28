@@ -17,6 +17,9 @@ class Enquiry(models.Model):
     user_agent = models.CharField(max_length=255, null=True, blank=True)
     ip_blocklist_response = models.TextField(null=True, blank=True)
     ip_blocklist = models.BooleanField(null=False, default=False)
+    
+    def get_full_name(self):
+        return "{0} {1}".format(e.first_name, e.last_name).trim()
 
     def utctime(self):
         return self.datemade

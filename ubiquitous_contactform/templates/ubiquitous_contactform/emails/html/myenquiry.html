@@ -1,6 +1,6 @@
 <h2>Enquiry from the contact form on {{ site.name }}:</h2>
 
-<h3>From {{ e.name }} ({{  e.email }})</h3>
+<h3>From {{ e.get_full_name }} ({{  e.email }})</h3>
 
 <blockquote>
     {{ e.text }}

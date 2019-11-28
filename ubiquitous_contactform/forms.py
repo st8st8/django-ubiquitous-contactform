@@ -41,7 +41,7 @@ class AbstractEnquiryForm(StyledErrorForm):
         if not enquiry.ip_blocklist:
             for a in settings.UBIQUITOUS_CONTACT_FORM_RECIPIENTS:
                 context = {}
-                context["e"] = self.cleaned_data
+                context["e"] = enquiry
                 context["site"] = site
                 html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
                     "myenquiry",
@@ -58,7 +58,7 @@ class AbstractEnquiryForm(StyledErrorForm):
                 )
             if settings.UBIQUITOUS_CONTACT_FORM_SEND_RECEIPT:
                 context = {}
-                context["e"] = self.cleaned_data
+                context["e"] = enquiry
                 context["site"] = site
                 html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
                     "receipt",
@@ -141,13 +141,9 @@ class EnquiryForm(AbstractEnquiryForm):
         enquiry.datemade = timezone.now()
         enquiry.frompage = request.path
         enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
-        meta = copy.copy(request.META)
-
-        for x in request.META.keys():
-            if not isinstance(meta[x], six.string_types):
-                del meta[x]
-
-        enquiry.request_meta = json.dumps(meta)
+        post = "\n".join(["{0} = {1}".format(x, request.POST[x]) for x in request.POST.keys()])
+        enquiry.request_meta = post
+        
         return enquiry
 
 
@@ -203,11 +199,7 @@ class HeavyHoneypotEnquiryForm(AbstractEnquiryForm):
         enquiry.datemade = timezone.now()
         enquiry.frompage = request.path
         enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
-        meta = copy.copy(request.META)
-
-        for x in request.META.keys():
-            if not isinstance(meta[x], six.string_types):
-                del meta[x]
-
-        enquiry.request_meta = json.dumps(meta)
+        post = "\n".join(["{0} = {1}".format(x, request.POST[x]) for x in request.POST.keys()])
+        enquiry.request_meta = post
+        
         return enquiry

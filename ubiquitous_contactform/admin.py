@@ -24,7 +24,7 @@ class EnquiryAdmin(admin.ModelAdmin):
             {
                 'fields':
                     [
-                        'datemade', 'utctime', 'company', ('email', 'tel'), 'frompage', 'user_agent', 'format_request_meta'
+                        'datemade', 'utctime', 'company', ('email', 'tel'), 'frompage', 'user_agent', 'request_meta'
                     ]
             }
         ),
@@ -35,17 +35,8 @@ class EnquiryAdmin(admin.ModelAdmin):
     # search_fields = ['']
     # date_hierarchy = 'datemade'
     readonly_fields = ['first_name', 'last_name', 'company', 'text', 'datemade', 'user_agent',
-                       'utctime', 'email', 'tel', 'frompage', 'format_request_meta']
-
-    def format_request_meta(self, instance):
-        ret = u"<table>\n"
-        meta = json.loads(instance.request_meta)
-        for x in sorted(meta.keys()):
-            ret += u"<tr><td>{0}</td><td>{1}</td></tr>".format(x, meta[x])
-        ret += u"</table>"
-        return ret
-
-    format_request_meta.allow_tags = True
+                       'utctime', 'email', 'tel', 'frompage', 'request_meta']
+                       
 
     def get_queryset(self, request):
         qs = super(EnquiryAdmin, self).get_queryset(request)
