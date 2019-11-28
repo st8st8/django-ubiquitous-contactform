@@ -19,7 +19,7 @@ class Enquiry(models.Model):
     ip_blocklist = models.BooleanField(null=False, default=False)
     
     def get_full_name(self):
-        return "{0} {1}".format(e.first_name, e.last_name).trim()
+        return "{0} {1}".format(self.first_name, self.last_name).trim()
 
     def utctime(self):
         return self.datemade
