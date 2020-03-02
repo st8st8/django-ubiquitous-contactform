@@ -82,8 +82,8 @@ class AbstractEnquiryForm(StyledErrorForm):
                 ip = request.META.get("REMOTE_ADDR")
                 resp = requests.get("http://api.blocklist.de/api.php?ip={0}".format(ip))
                 enquiry.ip_blocklist_response = resp.content
-                if "attacks: " in resp.content:
-                    if "attacks: 0" in resp.content:
+                if "attacks: " in resp.text:
+                    if "attacks: 0" in resp.text:
                         enquiry.ip_blocklist = False
                     else:
                         enquiry.ip_blocklist = True
