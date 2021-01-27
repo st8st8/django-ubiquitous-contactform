@@ -34,44 +34,11 @@ class AbstractEnquiryForm(StyledErrorForm):
         raise NotImplementedError
 
     def send_enquiry(self, request):
-        site = Site.objects.get_current(request)
         enquiry = self.form_to_model(request)
         self.is_blocklist(request, enquiry)
         enquiry.save()
         if not enquiry.ip_blocklist:
-            for a in settings.UBIQUITOUS_CONTACT_FORM_RECIPIENTS:
-                context = {}
-                context["e"] = enquiry
-                context["site"] = site
-                html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
-                    "myenquiry",
-                    a[1],
-                    context
-                )
-                utils.ubiquitous_contact_send_mail(
-                    "Enquiry on {0}".format(site.name),
-                    text_message,
-                    django_settings.SERVER_EMAIL,
-                    a[1],
-                    html_message=html_message,
-                    reply_to=[enquiry.email]
-                )
-            if settings.UBIQUITOUS_CONTACT_FORM_SEND_RECEIPT:
-                context = {}
-                context["e"] = enquiry
-                context["site"] = site
-                html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
-                    "receipt",
-                    enquiry.email,
-                    context
-                )
-                utils.ubiquitous_contact_send_mail(
-                    settings.UBIQUITOUS_CONTACT_FORM_RECEIPT_SUBJECT,
-                    text_message,
-                    django_settings.SERVER_EMAIL,
-                    enquiry.email,
-                    html_message=html_message
-                )
+            utils.send_enquiry_emails(enquiry)
                 
         return enquiry
 

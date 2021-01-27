@@ -1,7 +1,13 @@
 from __future__ import unicode_literals
 import json
 import ubiquitous_contactform.models as enq
+from . import utils
 from django.contrib import admin
+
+
+def resend_enquiry_emails(modeladmin, request, queryset):
+    for x in queryset:
+        utils.send_enquiry_emails(x, request=request)
 
 
 class EnquiryAdmin(admin.ModelAdmin):
@@ -36,6 +42,7 @@ class EnquiryAdmin(admin.ModelAdmin):
     # date_hierarchy = 'datemade'
     readonly_fields = ['first_name', 'last_name', 'company', 'text', 'datemade', 'user_agent',
                        'utctime', 'email', 'tel', 'frompage', 'request_meta']
+    actions = [resend_enquiry_emails]
                        
 
     def get_queryset(self, request):
