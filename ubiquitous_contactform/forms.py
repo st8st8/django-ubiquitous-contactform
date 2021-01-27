@@ -38,7 +38,7 @@ class AbstractEnquiryForm(StyledErrorForm):
         self.is_blocklist(request, enquiry)
         enquiry.save()
         if not enquiry.ip_blocklist:
-            utils.send_enquiry_emails(enquiry)
+            utils.send_enquiry_emails(enquiry, request=request)
                 
         return enquiry
 

@@ -13,7 +13,7 @@ def send_enquiry_emails(enquiry, request=None):
         context = {}
         context["e"] = enquiry
         context["site"] = site
-        html_message, text_message = utils.ubiquitous_contact_get_html_email_template(
+        html_message, text_message = ubiquitous_contact_get_html_email_template(
             "myenquiry",
             a[1],
             context
