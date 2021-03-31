@@ -108,6 +108,7 @@ class EnquiryForm(AbstractEnquiryForm):
         enquiry.datemade = timezone.now()
         enquiry.frompage = request.path
         enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
+        enquiry.ip_address = request.META.get("REMOTE_ADDR")
         post = "\n".join(["{0} = {1}".format(x, request.POST[x]) for x in request.POST.keys()])
         enquiry.request_meta = post
         
@@ -166,6 +167,7 @@ class HeavyHoneypotEnquiryForm(AbstractEnquiryForm):
         enquiry.datemade = timezone.now()
         enquiry.frompage = request.path
         enquiry.user_agent = request.META.get("HTTP_USER_AGENT")
+        enquiry.ip_address = request.META.get("REMOTE_ADDR")
         post = "\n".join(["{0} = {1}".format(x, request.POST[x]) for x in request.POST.keys()])
         enquiry.request_meta = post
         

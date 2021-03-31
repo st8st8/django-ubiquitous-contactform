@@ -35,7 +35,7 @@ class EnquiryAdmin(admin.ModelAdmin):
             }
         ),
     ]
-    list_display = ('__unicode__', 'ip_blocklist', 'utctime', 'email', 'frompage')
+    list_display = ('__unicode__', 'ip_blocklist', 'utctime', 'email', 'ip_address', 'frompage')
     # inlines = [MyInline]
     list_filter = ['ip_blocklist', 'datemade']
     # search_fields = ['']
