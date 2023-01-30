@@ -14,7 +14,7 @@ class Enquiry(models.Model):
     datemade = models.DateTimeField(default=djangotz.now, blank=True, verbose_name='Enquiry Date')
     frompage = models.CharField(max_length=50, verbose_name='Made on page', blank=True)
     request_meta = models.TextField(null=True, blank=True)
-    user_agent = models.CharField(max_length=255, null=True, blank=True)
+    user_agent = models.TextField(null=True, blank=True)
     ip_address = models.CharField(max_length=255, null=True, blank=True)
     ip_blocklist_response = models.TextField(null=True, blank=True)
     ip_blocklist = models.BooleanField(null=False, default=False)
