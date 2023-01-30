@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from django.conf import settings
 
 UBIQUITOUS_CONTACT_FORM_RECIPIENTS = getattr(settings, "UBIQUITOUS_CONTACT_FORM_RECIPIENTS", [])

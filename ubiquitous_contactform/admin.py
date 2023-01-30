@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 import json
 import ubiquitous_contactform.models as enq
 from . import utils

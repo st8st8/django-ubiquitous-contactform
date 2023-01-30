@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 
 import django.utils.timezone as djangotz
 from django.db import models

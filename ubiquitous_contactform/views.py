@@ -1,5 +1,4 @@
 # Create your views here.
-from __future__ import unicode_literals
 
 from django.urls import reverse
 from django.views import generic

@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from django.urls import re_path
 from ubiquitous_contactform import views as enquiry_views
 
